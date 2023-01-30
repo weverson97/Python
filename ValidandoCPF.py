@@ -8,7 +8,7 @@ procedimentos). Como a lógica de validação do CNPJ é muito similar à do CPF
 de programação.
 O algoritmo é explicado no link:
 
-http://www.macoratti.net/alg_cnpj.htm
+https://www.macoratti.net/alg_cpf.htm
 
 
 1) No link acima você encontra a explicação do algoritmo usado pela Receita Federal para validação de um CNPJ.
@@ -26,12 +26,18 @@ string e processá-la adequadamente.
     mult -> vetor com os multiplicadores, de tamanho N
     N -> Tamanho do vetor mult e também a quantidade de operações (9 ou 10)
 """
-soma = 0
+
 def calculaDigito(N, cnpj = [], mult = []):
+    soma = 0
     for i in range(N):
         soma = soma + cnpj[i] * mult[i]
+    resto = soma % 11
 
-    return ((soma * 10) % 14) % 10
+    if resto < 2:
+        return 0
+    else:
+        return 11 - resto
+
 
 
 def imprimeCNPJ(CNPJ = []):
@@ -55,11 +61,31 @@ def imprimeCNPJ(CNPJ = []):
 
 
 
-modulo1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
-modulo2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+modulo1 = [10, 9, 8, 7, 6, 5, 4, 3, 2]
+modulo2 = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
 
-CNPJ = [4, 1, 9, 5, 9, 8, 8, 0, 0, 0, 0, 1, 0, 5]
+#CPF_Informado = [4, 3, 1, 8, 6, 4, 4, 6, 8, 5, 6]
+#CPF_Validado = [4, 3, 1, 8, 6, 4, 4, 6, 8]
 
-teste = calculaDigito(13, CNPJ, modulo1)
+CPF_Informado = [4, 0, 2, 5, 5, 4, 3, 8, 8, 5, 0]
+CPF_Validado = [4, 0, 2, 5, 5, 4, 3, 8, 8]
 
-imprimeCNPJ(CNPJ)
+first_digito = calculaDigito(9, CPF_Validado, modulo1) # 4,3,1,8,6,4,4,6,8
+print(first_digito)
+print(CPF_Validado)
+CPF_Validado.insert(9, first_digito) ## Acrescenta o primeiro digito na ultima posição
+print(CPF_Validado)
+
+second_digito = calculaDigito(10, CPF_Validado, modulo2)
+print(second_digito)
+CPF_Validado.insert(10, second_digito)
+
+print(CPF_Validado)
+#print(CPF)
+
+if CPF_Informado == CPF_Validado:
+    print("Your CPF is valid")
+else:
+    print("Your CPF isn't valid")
+
+#imprimeCNPJ(teste)
