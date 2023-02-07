@@ -40,7 +40,7 @@ def calculaDigito(N, cpf = [], mult = []):
 
 CPF_Informado = [ ]
 CPF_Validado = [ ]
-CPF_Aux = [ ]
+
 modulo1 = [10, 9, 8, 7, 6, 5, 4, 3, 2]
 
 modulo2 = modulo1
@@ -55,46 +55,27 @@ if size < 11 or size > 11: #Avalia quantidades de digitos
 else: # Se o cpf tiver 11 digitos, converte em array com valores inteiro
     for i in range(size):
         CPF_Informado.insert(i, int (cpf[i]))
-
-print(f" CPF validado é {CPF_Validado}")
-print(f" CPF informado é {CPF_Informado}")
-  
-  
-CPF_Validado = CPF_Informado
-# CPF_Validado = [4,3,1,8,6,4,4,6,8,8,8]
-
-
-print(f" CPF validado é {CPF_Validado}")
-print(f" CPF informado é {CPF_Informado}")
+        CPF_Validado.insert(i, int (cpf[i]))
 
 # ------------------- Deleta posição 09 e 10 do array -------------------
 CPF_Validado.pop(10) #Apaga a posição 10
 CPF_Validado.pop(9) #Apaga a posição 09
 
-print(f" CPF validado é {CPF_Validado}")
-print(f" CPF informado é {CPF_Informado}")
 # ------------------- Procura primeiro digito  -------------------
 first_digito = calculaDigito(9, CPF_Validado, modulo1) 
-print(first_digito)
+#print(first_digito)
 CPF_Validado.insert(9, first_digito) ## Acrescenta o primeiro digito na ultima posição
 
-print(f" CPF validado é {CPF_Validado}")
-print(f" CPF informado é {CPF_Informado}")
 # ------------------- Procura segundo digito  -------------------
 second_digito = calculaDigito(10, CPF_Validado, modulo2)
-print(second_digito)
+#print(second_digito)
 CPF_Validado.insert(10, second_digito)
 
-print(f" CPF validado é {CPF_Validado}")
-print(f" CPF informado é {CPF_Informado}")
 # ------------------- Avalia se o CPF é válido  -------------------
-
-print(f" CPF validado é {CPF_Validado}")
-print(f" CPF informado é {CPF_Informado}")
 
 if CPF_Informado == CPF_Validado :
     print("Seu CPF é válido :)")
 else:
-    print("Seu CPF  não está válido :(")
+    print("Seu CPF não está válido :(")
 
 
